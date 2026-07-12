@@ -1,0 +1,11 @@
+{
+  "version": "1.0",
+  "skills": [
+    {
+      "id": "generate-pr-diagram",
+      "name": "Code Change Diagram",
+      "path": "skills/generate-pr-diagram",
+      "description": "Generate a visual system diagram for code changes"
+    }
+  ]
+}
