@@ -1,0 +1,9 @@
+{
+  "name": "claude-code-change-diagram",
+  "version": "0.1.0",
+  "description": "Generate a simple system diagram highlighting components changed by a commit/PR and the change summary.",
+  "entrypoint": "generate_diagram.py",
+  "language": "python",
+  "usage": "python generate_diagram.py [<commit-ish>]",
+  "author": "Copilot CLI"
+}
