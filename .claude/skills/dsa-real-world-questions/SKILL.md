@@ -130,3 +130,5 @@ a heap" or "this is a Union-Find problem"), not about generating full solutions/
 the "Why" explanations to reasoning about the choice of data structure/algorithm, not a
 line-by-line implementation. If the person separately asks for code for a specific question
 afterward, that's a normal follow-up request, not part of this skill's output.
+
+- created by Claude Sonnet 5 Medium
