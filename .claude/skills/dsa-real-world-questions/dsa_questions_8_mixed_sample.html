@@ -13,12 +13,14 @@
     --easy: #2E7D5B;
     --medium: #B7791F;
     --hard: #B3261E;
+    --naive: #8A8676;
+    --optimal: #26215C;
   }
   body {
     font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
     color: var(--ink);
     background: var(--bg);
-    max-width: 820px;
+    max-width: 840px;
     margin: 0 auto;
     padding: 40px 24px 80px;
     line-height: 1.6;
@@ -53,16 +55,41 @@
   .Medium { background: var(--medium); }
   .Hard { background: var(--hard); }
   .scenario { margin: 0; }
-  .answer-block { margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--border); }
+  .answer-block { margin-top: 12px; padding-top: 12px; border-top: 1px dashed var(--border); }
+  .approach {
+    margin: 10px 0;
+    padding: 12px 14px;
+    border-radius: 8px;
+    background: #FFFFFF;
+    border: 1px solid var(--border);
+  }
+  .approach.naive { border-left: 4px solid var(--naive); }
+  .approach.optimal { border-left: 4px solid var(--optimal); }
+  .approach-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--ink-soft);
+    margin-bottom: 4px;
+  }
+  .approach-title { font-weight: 700; margin: 0 0 4px; }
   .label { font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-soft); }
   code, .bigo { font-family: "SFMono-Regular", Consolas, monospace; background: #EEEDF6; padding: 1px 6px; border-radius: 4px; }
-  .why { margin: 4px 0 0; color: #34322E; }
+  .why, .desc { margin: 4px 0 0; color: #34322E; }
+  .tradeoff {
+    margin-top: 10px;
+    padding: 10px 14px;
+    background: #F3F1FB;
+    border-radius: 8px;
+    font-size: 14px;
+  }
 </style>
 </head>
 <body>
 
 <h1>DSA Real-World Practice Questions</h1>
-<p class="subtitle">8 questions · Mixed difficulty · Spanning multiple DSA concepts</p>
+<p class="subtitle">8 questions · Mixed difficulty · Naive baseline &amp; optimal approach(es) with trade-offs</p>
 
 <h2>Questions</h2>
 
@@ -95,57 +122,169 @@
 <div class="q"><div class="q-head"><span class="q-num">1.</span><span class="badge Easy">Easy</span></div>
 <p class="scenario">A food-delivery app has 2 million registered phone numbers. When someone tries to sign up, the system must instantly confirm whether that phone number is already registered.</p>
 <div class="answer-block">
-<p><span class="label">Concept:</span> Hash Set</p>
-<p class="why"><span class="label">Why:</span> Membership check across an unordered collection of 2M items is the textbook case for a hash set — average <span class="bigo">O(1)</span> lookup versus <span class="bigo">O(log n)</span> for a balanced tree or <span class="bigo">O(n)</span> for a plain list.</p>
+  <div class="approach naive">
+    <div class="approach-label">Naive</div>
+    <p class="approach-title">Linear scan</p>
+    <p class="desc">Check the new number against every stored number. <span class="bigo">O(n)</span> per check — at 2M+ numbers and every signup attempt, this doesn't hold up.</p>
+  </div>
+  <div class="approach optimal">
+    <div class="approach-label">Optimal</div>
+    <p class="approach-title">Hash Set</p>
+    <p class="why"><span class="label">Why:</span> Compute a hash of the number — <span class="bigo">O(L)</span>, L = number length, paid in every case (best/avg/worst), since the whole string must be hashed — then do an average <span class="bigo">O(1)</span> lookup. Simplest, lowest memory overhead, the default choice for exact membership.</p>
+  </div>
+  <div class="approach optimal">
+    <div class="approach-label">Optimal (alternative)</div>
+    <p class="approach-title">Trie (digit tree)</p>
+    <p class="why"><span class="label">Why:</span> <span class="bigo">O(L)</span> worst case, but many "not registered" checks diverge from every stored number within the first few digits, so average-case negative lookups are often faster than a hash set's fixed O(L) hashing cost. Also enables prefix-based features later (e.g. grouping by area/country code) for free. Trade-off: more memory per node (child pointers) and more implementation complexity than a flat hash set.</p>
+  </div>
+  <div class="tradeoff"><span class="label">Trade-off:</span> hash set is simpler and sufficient for pure membership checks; trie is worth it if negative lookups dominate or prefix-based features are a genuine future need — not just hypothetical.</div>
 </div></div>
 
 <div class="q"><div class="q-head"><span class="q-num">2.</span><span class="badge Easy">Easy</span></div>
 <p class="scenario">A print queue in an office needs to process documents in exactly the order they were submitted, and multiple employees can add jobs to the queue at any time.</p>
 <div class="answer-block">
-<p><span class="label">Concept:</span> Queue (FIFO)</p>
-<p class="why"><span class="label">Why:</span> "Process in the order submitted" is the definition of first-in-first-out — a stack would reverse the order, so a queue (or circular buffer for a fixed-capacity version) is the natural fit.</p>
+  <div class="approach naive">
+    <div class="approach-label">Naive</div>
+    <p class="approach-title">Array with front-removal</p>
+    <p class="desc">Store jobs in an array; removing the front job means shifting every remaining element down. <span class="bigo">O(n)</span> per dequeue.</p>
+  </div>
+  <div class="approach optimal">
+    <div class="approach-label">Optimal</div>
+    <p class="approach-title">Queue (linked-list based or circular buffer)</p>
+    <p class="why"><span class="label">Why:</span> "Process in the order submitted" is the definition of FIFO. A linked-list queue or circular buffer gives <span class="bigo">O(1)</span> enqueue/dequeue — a stack would reverse the order entirely, so it's ruled out.</p>
+  </div>
+  <div class="tradeoff"><span class="label">Trade-off:</span> linked-list queue is unbounded but has per-node pointer overhead; a circular buffer (fixed-size array) is more cache-friendly and memory-efficient but needs resizing logic once capacity is hit.</div>
 </div></div>
 
 <div class="q"><div class="q-head"><span class="q-num">3.</span><span class="badge Medium">Medium</span></div>
 <p class="scenario">A music streaming app keeps a "recently played" cache of the last 500 songs per user. Once full, playing a new song should evict whichever song hasn't been touched the longest, and re-playing an existing song should refresh its position instead of duplicating it.</p>
 <div class="answer-block">
-<p><span class="label">Concept:</span> LRU Cache (HashMap + Doubly Linked List)</p>
-<p class="why"><span class="label">Why:</span> Needs O(1) lookup by song <em>and</em> O(1) "move to most-recent" / eviction of the least-recent item — a hashmap alone gives fast lookup but no cheap way to track/update recency order, so it's paired with a doubly linked list.</p>
+  <div class="approach naive">
+    <div class="approach-label">Naive</div>
+    <p class="approach-title">Plain list, linear scan on every access</p>
+    <p class="desc">Find the song by scanning, then move it to the front. <span class="bigo">O(n)</span> per access.</p>
+  </div>
+  <div class="approach optimal">
+    <div class="approach-label">Optimal</div>
+    <p class="approach-title">LRU Cache (HashMap + Doubly Linked List)</p>
+    <p class="why"><span class="label">Why:</span> <span class="bigo">O(1)</span> lookup by song and <span class="bigo">O(1)</span> "move to most-recent" / eviction. The hashmap alone gives fast lookup but not fast recency reordering — pairing it with a doubly linked list makes reordering O(1) too.</p>
+  </div>
+  <div class="approach optimal">
+    <div class="approach-label">Optimal (alternative)</div>
+    <p class="approach-title">Approximate LRU / Clock algorithm</p>
+    <p class="why"><span class="label">Why:</span> A circular buffer with a per-entry "recently used" bit, swept like a clock hand to pick eviction candidates. Cheaper per-entry memory than pointer-heavy DLL nodes and simpler to implement, at the cost of only approximating true recency — the same trade real systems (OS page caches, Redis's approximated-LRU mode) make deliberately.</p>
+  </div>
+  <div class="tradeoff"><span class="label">Trade-off:</span> exact LRU when correctness of "least recently used" matters precisely; Clock/approximate LRU when optimizing for memory and throughput, where near-LRU behavior is good enough.</div>
 </div></div>
 
 <div class="q"><div class="q-head"><span class="q-num">4.</span><span class="badge Medium">Medium</span></div>
 <p class="scenario">A company's build system has hundreds of internal packages, where some packages depend on others being built first. Before running a build, the system needs to determine a valid build order — or detect that no valid order exists.</p>
 <div class="answer-block">
-<p><span class="label">Concept:</span> Topological Sort (+ cycle detection)</p>
-<p class="why"><span class="label">Why:</span> Dependencies are directed edges in a DAG; a valid build order is exactly a topological ordering, and "no valid order exists" corresponds to detecting a cycle during the sort.</p>
+  <div class="approach naive">
+    <div class="approach-label">Naive</div>
+    <p class="approach-title">Trial-and-error ordering</p>
+    <p class="desc">Repeatedly try to build whatever seems ready and retry failures until stable, or check all permutations of build order for validity. Wasteful re-checking, and permutation checking is factorial — infeasible at hundreds of packages.</p>
+  </div>
+  <div class="approach optimal">
+    <div class="approach-label">Optimal</div>
+    <p class="approach-title">Topological Sort — DFS-based</p>
+    <p class="why"><span class="label">Why:</span> Dependencies are directed edges in a DAG; a valid build order is exactly a topological ordering. DFS with post-order reversal gives the order in <span class="bigo">O(V + E)</span>, and a node revisited on the current recursion stack signals a cycle (no valid order).</p>
+  </div>
+  <div class="approach optimal">
+    <div class="approach-label">Optimal (alternative)</div>
+    <p class="approach-title">Topological Sort — Kahn's Algorithm (BFS with in-degree counting)</p>
+    <p class="why"><span class="label">Why:</span> Also <span class="bigo">O(V + E)</span>. Explicitly surfaces a cycle as "leftover nodes with nonzero in-degree" rather than via recursion-stack tracking, avoids recursion depth limits on very large dependency graphs, and naturally groups nodes by "build level" — useful if builds at the same level can run in parallel.</p>
+  </div>
+  <div class="tradeoff"><span class="label">Trade-off:</span> DFS-based is slightly simpler to code; Kahn's is safer for very deep graphs (no recursion limit) and gives parallel-build grouping for free.</div>
 </div></div>
 
 <div class="q"><div class="q-head"><span class="q-num">5.</span><span class="badge Medium">Medium</span></div>
 <p class="scenario">A logistics company has a map of cities connected by roads, each with a travel time. For a given truck route, they need the fastest way to get from the depot to a delivery city, where all travel times are positive.</p>
 <div class="answer-block">
-<p><span class="label">Concept:</span> Dijkstra's Algorithm</p>
-<p class="why"><span class="label">Why:</span> Weighted shortest path with non-negative weights is exactly Dijkstra's use case — plain BFS only finds shortest paths by edge <em>count</em>, not by weighted travel time.</p>
+  <div class="approach naive">
+    <div class="approach-label">Naive</div>
+    <p class="approach-title">Brute-force route enumeration</p>
+    <p class="desc">Enumerate all possible routes and sum travel times. Exponential in the number of cities — infeasible beyond a handful of nodes.</p>
+  </div>
+  <div class="approach optimal">
+    <div class="approach-label">Optimal</div>
+    <p class="approach-title">Dijkstra's Algorithm (array-based)</p>
+    <p class="why"><span class="label">Why:</span> <span class="bigo">O(V²)</span> — fine for a small/dense city graph. Weighted shortest path with non-negative weights is exactly Dijkstra's use case; plain BFS only finds shortest paths by edge count, not weighted travel time.</p>
+  </div>
+  <div class="approach optimal">
+    <div class="approach-label">Optimal (alternative)</div>
+    <p class="approach-title">Dijkstra's Algorithm (min-heap / priority queue)</p>
+    <p class="why"><span class="label">Why:</span> <span class="bigo">O((V + E) log V)</span> — scales far better once the road network is large and sparse (most real road networks are).</p>
+  </div>
+  <div class="tradeoff"><span class="label">Trade-off:</span> array-based is simpler to write and fine for a small fixed city list; heap-based is the right call once the network is large and sparse.</div>
 </div></div>
 
 <div class="q"><div class="q-head"><span class="q-num">6.</span><span class="badge Hard">Hard</span></div>
 <p class="scenario">A telecom provider is laying fiber cable to connect 50 new towers to the network at minimum total cable cost, given the cost to lay cable between every possible pair of towers.</p>
 <div class="answer-block">
-<p><span class="label">Concept:</span> Minimum Spanning Tree (Kruskal's or Prim's algorithm)</p>
-<p class="why"><span class="label">Why:</span> "Connect everything at minimum total edge cost" is precisely the MST problem. Kruskal's (sort edges + Union-Find) suits this dense-but-small graph well; Prim's would be preferable if the graph were much sparser and represented via adjacency lists.</p>
+  <div class="approach naive">
+    <div class="approach-label">Naive</div>
+    <p class="approach-title">Enumerate all spanning trees</p>
+    <p class="desc">Try every possible spanning tree and pick the cheapest. By Cayley's formula there are n<sup>n-2</sup> spanning trees on n nodes — combinatorially explosive well before 50 towers.</p>
+  </div>
+  <div class="approach optimal">
+    <div class="approach-label">Optimal</div>
+    <p class="approach-title">Kruskal's Algorithm (sort edges + Union-Find)</p>
+    <p class="why"><span class="label">Why:</span> <span class="bigo">O(E log E)</span>. "Connect everything at minimum total edge cost" is precisely the MST problem. Kruskal's suits this scenario directly since all pairwise costs are already given as a flat edge list.</p>
+  </div>
+  <div class="approach optimal">
+    <div class="approach-label">Optimal (alternative)</div>
+    <p class="approach-title">Prim's Algorithm (with min-heap)</p>
+    <p class="why"><span class="label">Why:</span> <span class="bigo">O(E log V)</span>. Better suited if the graph were represented via adjacency lists and much sparser (e.g. towers only have quoted costs to nearby towers, not every pair).</p>
+  </div>
+  <div class="tradeoff"><span class="label">Trade-off:</span> Kruskal's is the natural fit here since costs are given for every pair (dense, edge-list-shaped input); Prim's is preferable when the graph is sparse and adjacency-list-shaped.</div>
 </div></div>
 
 <div class="q"><div class="q-head"><span class="q-num">7.</span><span class="badge Hard">Hard</span></div>
 <p class="scenario">An analytics dashboard ingests millions of price ticks for a stock and must answer, for any arbitrary time range a user selects, the sum of trading volume in that range — while new ticks keep streaming in and old ranges can still be queried.</p>
 <div class="answer-block">
-<p><span class="label">Concept:</span> Fenwick Tree / Binary Indexed Tree (or Segment Tree)</p>
-<p class="why"><span class="label">Why:</span> Needs both range-sum queries <em>and</em> point updates (new ticks) at scale — recomputing sums naively is <span class="bigo">O(n)</span> per query; a Fenwick/segment tree gives <span class="bigo">O(log n)</span> for both operations.</p>
+  <div class="approach naive">
+    <div class="approach-label">Naive</div>
+    <p class="approach-title">Direct scan or plain prefix-sum array</p>
+    <p class="desc">Scan the relevant range on every query (<span class="bigo">O(n)</span> per query), or maintain a prefix-sum array that must be rebuilt on every new tick (<span class="bigo">O(n)</span> per update). Either way, one of the two operations degrades badly at millions of ticks.</p>
+  </div>
+  <div class="approach optimal">
+    <div class="approach-label">Optimal</div>
+    <p class="approach-title">Fenwick Tree / Binary Indexed Tree</p>
+    <p class="why"><span class="label">Why:</span> <span class="bigo">O(log n)</span> per point update (new tick) and per prefix/range-sum query. Lean, low memory overhead — the right default when sums are all that's needed.</p>
+  </div>
+  <div class="approach optimal">
+    <div class="approach-label">Optimal (alternative)</div>
+    <p class="approach-title">Segment Tree</p>
+    <p class="why"><span class="label">Why:</span> Also <span class="bigo">O(log n)</span> per update/query, with more implementation and memory overhead than a Fenwick tree, but generalizes beyond sums — range min/max/gcd, and range *updates* via lazy propagation, if requirements are likely to expand.</p>
+  </div>
+  <div class="tradeoff"><span class="label">Trade-off:</span> Fenwick tree when the need is (and will likely stay) range-sum-shaped; segment tree when more query types are needed now or foreseeably.</div>
 </div></div>
 
 <div class="q"><div class="q-head"><span class="q-num">8.</span><span class="badge Hard">Hard</span></div>
 <p class="scenario">A warehouse robot can move through a grid of shelves, but some cells are blocked and the "cost" of entering a cell changes over time (congestion). The robot needs the minimum-cost path from its dock to a target shelf, re-planning as costs update, and a plain shortest-unweighted-path approach is too slow at the warehouse's scale (10,000+ cells, updates every few seconds).</p>
 <div class="answer-block">
-<p><span class="label">Concept:</span> Dijkstra's Algorithm with a min-heap (weighted grid shortest path)</p>
-<p class="why"><span class="label">Why:</span> Costs vary per cell, so plain BFS (which assumes uniform edge weight) gives the wrong answer; treating the grid as a weighted graph and running Dijkstra with a priority queue gives correct, efficiently re-computable shortest paths as weights change.</p>
+  <div class="approach naive">
+    <div class="approach-label">Naive</div>
+    <p class="approach-title">Unweighted BFS, or full re-plan from scratch</p>
+    <p class="desc">Plain BFS assumes uniform edge cost and ignores congestion, giving a wrong/suboptimal path; alternatively, recomputing a full weighted search from scratch on every cost update is too slow at 10,000+ cells updating every few seconds.</p>
+  </div>
+  <div class="approach optimal">
+    <div class="approach-label">Optimal</div>
+    <p class="approach-title">Dijkstra's Algorithm with a min-heap (weighted grid)</p>
+    <p class="why"><span class="label">Why:</span> <span class="bigo">O((V + E) log V)</span> per full replan. Treating the grid as a weighted graph and using a priority queue gives correct shortest paths under varying per-cell cost, unlike unweighted BFS.</p>
+  </div>
+  <div class="approach optimal">
+    <div class="approach-label">Optimal (alternative)</div>
+    <p class="approach-title">A* Search (heuristic-guided)</p>
+    <p class="why"><span class="label">Why:</span> Same worst-case complexity as Dijkstra, but an admissible heuristic (e.g. Manhattan/Euclidean distance to the target) directs the search toward the goal, often visiting far fewer nodes in practice. Trade-off: needs a good heuristic to pay off.</p>
+  </div>
+  <div class="approach optimal">
+    <div class="approach-label">Optimal (alternative)</div>
+    <p class="approach-title">D* Lite / incremental replanning</p>
+    <p class="why"><span class="label">Why:</span> Reuses prior search results and only recomputes the portion of the path affected by a cost change, rather than restarting from scratch every few seconds — the best fit for genuinely repeated replanning, at the cost of significantly higher implementation complexity.</p>
+  </div>
+  <div class="tradeoff"><span class="label">Trade-off:</span> plain Dijkstra is simplest and fine if replans are infrequent; A* speeds up each individual replan with a decent heuristic; D* Lite is the real answer once replanning happens continuously and re-solving from scratch every time is itself the bottleneck.</div>
 </div></div>
 
 </body>
