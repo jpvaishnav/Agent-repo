@@ -72,10 +72,11 @@ Always ground the scenario in a believable scale or constraint (number of users,
 memory limits, real-time requirement) — that's what makes it feel like an engineering problem
 instead of a puzzle.
 
-## Step 5 — Write the output as a single HTML file
+## Step 5 — Write the output in both HTML and Markdown
 
-Create one self-contained `.html` file (inline `<style>`, no external dependencies) with two
-sections, in this order:
+Produce **two files from the same generated question set** (write the content once, then
+render it into both formats — don't regenerate scenarios independently for each, they must
+match exactly). Both follow the same two-section structure, in this order:
 
 1. **"Questions"** — numbered list of just the scenarios, each tagged with its difficulty
    (Easy/Medium/Hard badge). No hints about which DSA concept to use.
@@ -87,12 +88,21 @@ sections, in this order:
    - Optional: complexity (Big-O) if it meaningfully clarifies the choice, especially for
      Medium/Hard questions.
 
-Keep styling clean and readable (generous line-height, clear section headers, a distinct
-badge color per difficulty level, monospace for any Big-O notation) — this doesn't need to be
+**HTML version** (`.html`): self-contained (inline `<style>`, no external dependencies). Keep
+styling clean and readable (generous line-height, clear section headers, a distinct badge
+color per difficulty level, monospace for any Big-O notation) — this doesn't need to be
 elaborate, just legible as a study document someone will actually read end to end.
 
-Save the file to `/mnt/user-data/outputs/` and present it with `present_files`. Suggest a
-filename like `dsa_questions_<n>_<difficulty>_<concept-or-mixed>.html`.
+**Markdown version** (`.md`): plain, portable formatting — `##` for the two section headers,
+a numbered list for "Questions", and for "Answers & Approach" repeat each numbered question
+as a `###` (or bold) heading followed by **Concept:** / **Why:** lines. Use a bracketed tag
+like `[Easy]` / `[Medium]` / `[Hard]` next to each question number in place of the HTML badge.
+No raw HTML inside the markdown file — it should render cleanly anywhere markdown is viewed
+(GitHub, Notion, plain text editors, etc.).
+
+Save both files to `/mnt/user-data/outputs/` and present them together with `present_files`.
+Use matching filenames aside from the extension, e.g.
+`dsa_questions_<n>_<difficulty>_<concept-or-mixed>.html` and `....md`.
 
 ## Notes on scope
 
@@ -101,5 +111,3 @@ a heap" or "this is a Union-Find problem"), not about generating full solutions/
 the "Why" explanations to reasoning about the choice of data structure/algorithm, not a
 line-by-line implementation. If the person separately asks for code for a specific question
 afterward, that's a normal follow-up request, not part of this skill's output.
-
-- created by Claude Sonnet 5 (Medium Cost)
