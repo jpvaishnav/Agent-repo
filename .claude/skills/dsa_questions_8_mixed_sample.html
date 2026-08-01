@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>DSA Real-World Practice Questions</title>
+<style>
+  :root {
+    --ink: #26215C;
+    --ink-soft: #5F5E5A;
+    --bg: #FFFFFF;
+    --card: #F8F7F2;
+    --border: #E4E2D8;
+    --easy: #2E7D5B;
+    --medium: #B7791F;
+    --hard: #B3261E;
+  }
+  body {
+    font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+    color: var(--ink);
+    background: var(--bg);
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+    line-height: 1.6;
+  }
+  h1 { font-size: 28px; margin-bottom: 4px; }
+  .subtitle { color: var(--ink-soft); margin-top: 0; margin-bottom: 40px; font-size: 15px; }
+  h2 {
+    font-size: 20px;
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 8px;
+    margin-top: 56px;
+  }
+  .q {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 20px;
+    margin: 16px 0;
+  }
+  .q-head { display: flex; align-items: baseline; gap: 10px; margin-bottom: 6px; }
+  .q-num { font-weight: 700; color: var(--ink); }
+  .badge {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 2px 9px;
+    border-radius: 999px;
+    color: #fff;
+  }
+  .Easy { background: var(--easy); }
+  .Medium { background: var(--medium); }
+  .Hard { background: var(--hard); }
+  .scenario { margin: 0; }
+  .answer-block { margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--border); }
+  .label { font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-soft); }
+  code, .bigo { font-family: "SFMono-Regular", Consolas, monospace; background: #EEEDF6; padding: 1px 6px; border-radius: 4px; }
+  .why { margin: 4px 0 0; color: #34322E; }
+</style>
+</head>
+<body>
+
+<h1>DSA Real-World Practice Questions</h1>
+<p class="subtitle">8 questions · Mixed difficulty · Spanning multiple DSA concepts</p>
+
+<h2>Questions</h2>
+
+<div class="q"><div class="q-head"><span class="q-num">1.</span><span class="badge Easy">Easy</span></div>
+<p class="scenario">A food-delivery app has 2 million registered phone numbers. When someone tries to sign up, the system must instantly confirm whether that phone number is already registered.</p></div>
+
+<div class="q"><div class="q-head"><span class="q-num">2.</span><span class="badge Easy">Easy</span></div>
+<p class="scenario">A print queue in an office needs to process documents in exactly the order they were submitted, and multiple employees can add jobs to the queue at any time.</p></div>
+
+<div class="q"><div class="q-head"><span class="q-num">3.</span><span class="badge Medium">Medium</span></div>
+<p class="scenario">A music streaming app keeps a "recently played" cache of the last 500 songs per user. Once full, playing a new song should evict whichever song hasn't been touched the longest, and re-playing an existing song should refresh its position instead of duplicating it.</p></div>
+
+<div class="q"><div class="q-head"><span class="q-num">4.</span><span class="badge Medium">Medium</span></div>
+<p class="scenario">A company's build system has hundreds of internal packages, where some packages depend on others being built first. Before running a build, the system needs to determine a valid build order — or detect that no valid order exists.</p></div>
+
+<div class="q"><div class="q-head"><span class="q-num">5.</span><span class="badge Medium">Medium</span></div>
+<p class="scenario">A logistics company has a map of cities connected by roads, each with a travel time. For a given truck route, they need the fastest way to get from the depot to a delivery city, where all travel times are positive.</p></div>
+
+<div class="q"><div class="q-head"><span class="q-num">6.</span><span class="badge Hard">Hard</span></div>
+<p class="scenario">A telecom provider is laying fiber cable to connect 50 new towers to the network at minimum total cable cost, given the cost to lay cable between every possible pair of towers.</p></div>
+
+<div class="q"><div class="q-head"><span class="q-num">7.</span><span class="badge Hard">Hard</span></div>
+<p class="scenario">An analytics dashboard ingests millions of price ticks for a stock and must answer, for any arbitrary time range a user selects, the sum of trading volume in that range — while new ticks keep streaming in and old ranges can still be queried.</p></div>
+
+<div class="q"><div class="q-head"><span class="q-num">8.</span><span class="badge Hard">Hard</span></div>
+<p class="scenario">A warehouse robot can move through a grid of shelves, but some cells are blocked and the "cost" of entering a cell changes over time (congestion). The robot needs the minimum-cost path from its dock to a target shelf, re-planning as costs update, and a plain shortest-unweighted-path approach is too slow at the warehouse's scale (10,000+ cells, updates every few seconds).</p></div>
+
+<h2>Answers &amp; Approach</h2>
+
+<div class="q"><div class="q-head"><span class="q-num">1.</span><span class="badge Easy">Easy</span></div>
+<p class="scenario">A food-delivery app has 2 million registered phone numbers. When someone tries to sign up, the system must instantly confirm whether that phone number is already registered.</p>
+<div class="answer-block">
+<p><span class="label">Concept:</span> Hash Set</p>
+<p class="why"><span class="label">Why:</span> Membership check across an unordered collection of 2M items is the textbook case for a hash set — average <span class="bigo">O(1)</span> lookup versus <span class="bigo">O(log n)</span> for a balanced tree or <span class="bigo">O(n)</span> for a plain list.</p>
+</div></div>
+
+<div class="q"><div class="q-head"><span class="q-num">2.</span><span class="badge Easy">Easy</span></div>
+<p class="scenario">A print queue in an office needs to process documents in exactly the order they were submitted, and multiple employees can add jobs to the queue at any time.</p>
+<div class="answer-block">
+<p><span class="label">Concept:</span> Queue (FIFO)</p>
+<p class="why"><span class="label">Why:</span> "Process in the order submitted" is the definition of first-in-first-out — a stack would reverse the order, so a queue (or circular buffer for a fixed-capacity version) is the natural fit.</p>
+</div></div>
+
+<div class="q"><div class="q-head"><span class="q-num">3.</span><span class="badge Medium">Medium</span></div>
+<p class="scenario">A music streaming app keeps a "recently played" cache of the last 500 songs per user. Once full, playing a new song should evict whichever song hasn't been touched the longest, and re-playing an existing song should refresh its position instead of duplicating it.</p>
+<div class="answer-block">
+<p><span class="label">Concept:</span> LRU Cache (HashMap + Doubly Linked List)</p>
+<p class="why"><span class="label">Why:</span> Needs O(1) lookup by song <em>and</em> O(1) "move to most-recent" / eviction of the least-recent item — a hashmap alone gives fast lookup but no cheap way to track/update recency order, so it's paired with a doubly linked list.</p>
+</div></div>
+
+<div class="q"><div class="q-head"><span class="q-num">4.</span><span class="badge Medium">Medium</span></div>
+<p class="scenario">A company's build system has hundreds of internal packages, where some packages depend on others being built first. Before running a build, the system needs to determine a valid build order — or detect that no valid order exists.</p>
+<div class="answer-block">
+<p><span class="label">Concept:</span> Topological Sort (+ cycle detection)</p>
+<p class="why"><span class="label">Why:</span> Dependencies are directed edges in a DAG; a valid build order is exactly a topological ordering, and "no valid order exists" corresponds to detecting a cycle during the sort.</p>
+</div></div>
+
+<div class="q"><div class="q-head"><span class="q-num">5.</span><span class="badge Medium">Medium</span></div>
+<p class="scenario">A logistics company has a map of cities connected by roads, each with a travel time. For a given truck route, they need the fastest way to get from the depot to a delivery city, where all travel times are positive.</p>
+<div class="answer-block">
+<p><span class="label">Concept:</span> Dijkstra's Algorithm</p>
+<p class="why"><span class="label">Why:</span> Weighted shortest path with non-negative weights is exactly Dijkstra's use case — plain BFS only finds shortest paths by edge <em>count</em>, not by weighted travel time.</p>
+</div></div>
+
+<div class="q"><div class="q-head"><span class="q-num">6.</span><span class="badge Hard">Hard</span></div>
+<p class="scenario">A telecom provider is laying fiber cable to connect 50 new towers to the network at minimum total cable cost, given the cost to lay cable between every possible pair of towers.</p>
+<div class="answer-block">
+<p><span class="label">Concept:</span> Minimum Spanning Tree (Kruskal's or Prim's algorithm)</p>
+<p class="why"><span class="label">Why:</span> "Connect everything at minimum total edge cost" is precisely the MST problem. Kruskal's (sort edges + Union-Find) suits this dense-but-small graph well; Prim's would be preferable if the graph were much sparser and represented via adjacency lists.</p>
+</div></div>
+
+<div class="q"><div class="q-head"><span class="q-num">7.</span><span class="badge Hard">Hard</span></div>
+<p class="scenario">An analytics dashboard ingests millions of price ticks for a stock and must answer, for any arbitrary time range a user selects, the sum of trading volume in that range — while new ticks keep streaming in and old ranges can still be queried.</p>
+<div class="answer-block">
+<p><span class="label">Concept:</span> Fenwick Tree / Binary Indexed Tree (or Segment Tree)</p>
+<p class="why"><span class="label">Why:</span> Needs both range-sum queries <em>and</em> point updates (new ticks) at scale — recomputing sums naively is <span class="bigo">O(n)</span> per query; a Fenwick/segment tree gives <span class="bigo">O(log n)</span> for both operations.</p>
+</div></div>
+
+<div class="q"><div class="q-head"><span class="q-num">8.</span><span class="badge Hard">Hard</span></div>
+<p class="scenario">A warehouse robot can move through a grid of shelves, but some cells are blocked and the "cost" of entering a cell changes over time (congestion). The robot needs the minimum-cost path from its dock to a target shelf, re-planning as costs update, and a plain shortest-unweighted-path approach is too slow at the warehouse's scale (10,000+ cells, updates every few seconds).</p>
+<div class="answer-block">
+<p><span class="label">Concept:</span> Dijkstra's Algorithm with a min-heap (weighted grid shortest path)</p>
+<p class="why"><span class="label">Why:</span> Costs vary per cell, so plain BFS (which assumes uniform edge weight) gives the wrong answer; treating the grid as a weighted graph and running Dijkstra with a priority queue gives correct, efficiently re-computable shortest paths as weights change.</p>
+</div></div>
+
+</body>
+</html>
