@@ -1,0 +1,12 @@
+{
+  "name": "docs-creator",
+  "description": "Agent that writes structured documentation for the codebase: HLD, LLD, and architecture diagrams. Produces markdown files and diagram DOTs in output/.",
+  "abilities": [
+    "Analyze repository structure and dependencies",
+    "Produce High-Level Design (HLD) docs summarizing components, responsibilities, and data flow",
+    "Produce Low-Level Design (LLD) docs with module/class/function details and sequence diagrams",
+    "Generate architecture diagrams (DOT) and render with Graphviz if available",
+    "Output docs to .claude/agents/docs-creator/output/ and provide CLI options for rev and output path"
+  ],
+  "usage": "Run scripts/generate_docs.py [--rev REV] [--output-dir PATH]"
+}
