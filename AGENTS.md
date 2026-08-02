@@ -9,3 +9,8 @@ This file defines the repository-wide context for agents operating in this repos
 - Keep per-skill outputs inside each skill's `output/` directory to avoid global state.
 
 Agents should respect these conventions when adding skills, reading instructions, or operating on code in this repository.
+
+## Further reading
+
+- Official Claude Agents documentation: https://code.claude.com/docs/en
+
