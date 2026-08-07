@@ -1,0 +1,68 @@
+{
+  "query": "dotnet test",
+  "results": [
+    {
+      "engine": "google",
+      "searchUrl": "https://www.google.com/search?q=dotnet%20test",
+      "topResults": [
+        {
+          "title": "feedback",
+          "link": "https://support.google.com/websearch",
+          "snippet": "Skip to main content    Google Search HelpSign inGoogle HelpHelp CenterCommunityGoogle SearchPrivacy PolicyTerms of ServiceSubmit feedback   Send feedback on...This help content & informationGeneral Help Center experienceNextHelp CenterCommunityImprove your Google AccountGoogle Search      How can we help you?Describe your issue to find information that might help you.                                 Browse help topics   Popular articlesFind & erase your Google Search historyUnderstand & manage your location when you search on GoogleManage Google autocomplete predictionsIdentify & shop from Small Businesses on Google SearchFind & control your Web & App ActivityCustomize what you find in DiscoverGet info about your photos & surroundingsUse Google Voice SearchManage your Visual Search History in your settingsEnhance learning with Learn AboutFind information in faster & easier ways with AI Overviews in Google SearchDiscover feed source overviewHow to search with Google on Android XRExplore & collect images with the Images tab in the Google appGet started with Search Services History & Personalized RecommendationsManage Personalized Recommendations in Search servicesFind & manage Search Services HistoryManage your saved media in Search Services HistoryRequest removalsReport a problemRequest to have your personal content removed from Google SearchGet help removing explicit or intimate personal imagesFind and remove personal info in Google Search resultsContent removal options outside of Google SearchBrowse the webLearn search tips & how results relate to your search on GoogleWhat you can search forNarrow your search results with filtersAccessibility in Google SearchGet travel search results from GmailUse Google BooksLearn more about a web pageLearn more about an imageFind videos in SearchEvaluate info you find with GoogleReliable results on SearchAccess & manage your interestsSearch on your phone or tabletUse the Google App on AndroidUse the Google app on iPhones & iPads..."
+        }
+      ]
+    },
+    {
+      "engine": "bing",
+      "searchUrl": "https://www.bing.com/search?q=dotnet%20test",
+      "topResults": [
+        {
+          "title": "Images",
+          "link": "https://www.bing.com/ck/a?!&amp;&amp;p=3c30473e8a565e1bd5970298dabc9758f008cb9f850f88328ba6145733e1005cJmltdHM9MTc4NjA2MDgwMA&amp;ptn=3&amp;ver=2&amp;hsh=4&amp;fclid=0dd63613-e502-6dac-2754-21bde4d96cd6&amp;u=a1L2ltYWdlcy9zZWFyY2g_cT1kb3RuZXQrdGVzdCZGT1JNPUhEUlNDMg&amp;ntb=1",
+          "snippet": "Intelligent search from Bing makes it easier to quickly find what you’re looking for and rewards you."
+        },
+        {
+          "title": "Videos",
+          "link": "https://www.bing.com/ck/a?!&amp;&amp;p=9490c116731abba8efa27670c839c0544701e54da0a4b7d43f50a9cc1b9de864JmltdHM9MTc4NjA2MDgwMA&amp;ptn=3&amp;ver=2&amp;hsh=4&amp;fclid=0dd63613-e502-6dac-2754-21bde4d96cd6&amp;u=a1L3ZpZGVvcy9zZWFyY2g_cT1kb3RuZXQrdGVzdCZGT1JNPUhEUlNDMw&amp;ntb=1",
+          "snippet": "Intelligent search from Bing makes it easier to quickly find what you’re looking for and rewards you."
+        },
+        {
+          "title": "Maps",
+          "link": "https://www.bing.com/ck/a?!&amp;&amp;p=2f05b71b40a0bca1604d3fa43dfa59cd1ea4629d681e9beb85c953f4e1c27357JmltdHM9MTc4NjA2MDgwMA&amp;ptn=3&amp;ver=2&amp;hsh=4&amp;fclid=0dd63613-e502-6dac-2754-21bde4d96cd6&amp;u=a1L21hcHM_cT1kb3RuZXQrdGVzdCZGT1JNPUhEUlNDNA&amp;ntb=1",
+          "snippet": "Intelligent search from Bing makes it easier to quickly find what you’re looking for and rewards you."
+        }
+      ]
+    },
+    {
+      "engine": "duckduckgo",
+      "searchUrl": "https://html.duckduckgo.com/html?q=dotnet%20test",
+      "topResults": []
+    },
+    {
+      "engine": "yahoo",
+      "searchUrl": "https://search.yahoo.com/search?p=dotnet%20test",
+      "topResults": [
+        {
+          "title": "Yahoo",
+          "link": "https://www.yahoo.com",
+          "snippet": "Settings Home Mail News Finance Sports WeatherHelpSettings"
+        },
+        {
+          "title": "Settings",
+          "link": "https://search.yahoo.com/preferences/preferences?pref_done=https%3A%2F%2Fsearch.yahoo.com%2Fsearch%3Fp%3Ddotnet%2Btest&sigpd=2W_5cmJTf4ca",
+          "snippet": "Home Mail News Finance Sports WeatherHelpSettings"
+        },
+        {
+          "title": "Home",
+          "link": "https://www.yahoo.com/",
+          "snippet": "Search Query for Search the webSearch with Yahoo ScoutSearch the webSkip to features barSkip to left columnSkip to mainSkip to right columnNewsFinanceSportsMoreMailSearch the webAdvertisementAdvertisementAdvertisement1of 18U.S. appeals court orders halt to Trump's $400 million White House ballroom projectReuters6.4K1of 18Farmer's Almanac releases winter forecast: Conditions to expect where you liveUSA TODAY1162of 18These once-pricey home upgrades are becoming must-haves for modern livingGood Housekeeping5063of 18Divorce gets a rebrand as women turn heartbreak into summer's hottest trendYahoo Life1.6K4of 18AdvertisementAdvertisement5of 18New rom-com has a premise so wild that people are comparing it to 'The Purge'Yahoo Entertainment946of 18New infrared glasses hint at a future where humans see more than evolution allowedPopular Science7367of 18Buying a sofa? Interior designers say these 7 mistakes can cost you for years.Yahoo Life1428of 18Largest U.S. reservoir falls to record low after drought, extreme heat and lack of snowCNN1K9of 1810of 18Bagged lettuce is out, berries are getting the side-eye. 6 experts share what they're eating.Yahoo Life42611of 18Scientists were studying why this shark glows in the dark. Then things got weird.ScienceAlert6712of 18'Analog bags' are the latest symbol of Gen Z's movement to spend less time onlineUSA TODAY15613of 18Francesca Hong is poised to win in Wisconsin. Democrats worry about what comes next.Yahoo News11414of 1815of 18The 'wrong shoe' styling trick is trending — and it makes basic outfits look more fashionableYahoo Life11416of 18The Scuba Dance may be coming to a gathering near you: Where it came from\nYahoo Life16417of 18That's a real guy in this billboard. And yes, he's actually living there for a few days.Entertainment Weekly22018of 18Farmer's Almanac releases winter forecast: Conditions to expect where you liveUSA TODAY116These once-pricey home upgrades are becoming must-haves for modern livingGood Housekeeping506Divorce g..."
+        }
+      ]
+    },
+    {
+      "engine": "startpage",
+      "searchUrl": "https://www.startpage.com/sp/search?q=dotnet%20test",
+      "topResults": []
+    }
+  ]
+}
