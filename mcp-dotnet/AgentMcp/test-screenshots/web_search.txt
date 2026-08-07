@@ -1,7 +1,68 @@
 {
   "query": "dotnet test",
   "results": [
-    { "engine": "google", "searchUrl": "https://www.google.com/search?q=dotnet+test", "topResults": [ { "title":".NET testing overview","link":"https://learn.microsoft.com/dotnet/core/testing/","snippet":"Learn about testing in .NET" } ] },
-    { "engine": "bing", "searchUrl": "https://www.bing.com/search?q=dotnet+test", "topResults": [ { "title":"Introduction to testing in .NET","link":"https://learn.microsoft.com/dotnet/core/testing/","snippet":"Unit testing and more" } ] }
+    {
+      "engine": "google",
+      "searchUrl": "https://www.google.com/search?q=dotnet%20test",
+      "topResults": [
+        {
+          "title": "feedback",
+          "link": "https://support.google.com/websearch",
+          "snippet": ""
+        }
+      ]
+    },
+    {
+      "engine": "bing",
+      "searchUrl": "https://www.bing.com/search?q=dotnet%20test",
+      "topResults": [
+        {
+          "title": "Images",
+          "link": "https://www.bing.com/ck/a?!&amp;&amp;p=f5fc9e4a1f67700722f02ac7afa8435122836b099f7a128161516ea7ecc8c2c3JmltdHM9MTc4NjA2MDgwMA&amp;ptn=3&amp;ver=2&amp;hsh=4&amp;fclid=02c49e2f-e151-6c38-2e45-8981e0d46d5a&amp;u=a1L2ltYWdlcy9zZWFyY2g_cT1kb3RuZXQrdGVzdCZGT1JNPUhEUlNDMg&amp;ntb=1",
+          "snippet": ""
+        },
+        {
+          "title": "Videos",
+          "link": "https://www.bing.com/ck/a?!&amp;&amp;p=6057335985b922a6ba122f77a0cc295d40d1864f53cbf06f8880d967f86dafbbJmltdHM9MTc4NjA2MDgwMA&amp;ptn=3&amp;ver=2&amp;hsh=4&amp;fclid=02c49e2f-e151-6c38-2e45-8981e0d46d5a&amp;u=a1L3ZpZGVvcy9zZWFyY2g_cT1kb3RuZXQrdGVzdCZGT1JNPUhEUlNDMw&amp;ntb=1",
+          "snippet": ""
+        },
+        {
+          "title": "Maps",
+          "link": "https://www.bing.com/ck/a?!&amp;&amp;p=7d7f5cc3b99999cd0ff078767372a7aa938c546924474867cb8997fe762e0c0fJmltdHM9MTc4NjA2MDgwMA&amp;ptn=3&amp;ver=2&amp;hsh=4&amp;fclid=02c49e2f-e151-6c38-2e45-8981e0d46d5a&amp;u=a1L21hcHM_cT1kb3RuZXQrdGVzdCZGT1JNPUhEUlNDNA&amp;ntb=1",
+          "snippet": ""
+        }
+      ]
+    },
+    {
+      "engine": "duckduckgo",
+      "searchUrl": "https://html.duckduckgo.com/html?q=dotnet%20test",
+      "topResults": []
+    },
+    {
+      "engine": "yahoo",
+      "searchUrl": "https://search.yahoo.com/search?p=dotnet%20test",
+      "topResults": [
+        {
+          "title": "Yahoo",
+          "link": "https://www.yahoo.com",
+          "snippet": ""
+        },
+        {
+          "title": "Settings",
+          "link": "https://search.yahoo.com/preferences/preferences?pref_done=https%3A%2F%2Fsearch.yahoo.com%2Fsearch%3Fp%3Ddotnet%2Btest&sigpd=2W_5cmJTf4ca",
+          "snippet": ""
+        },
+        {
+          "title": "Home",
+          "link": "https://www.yahoo.com/",
+          "snippet": ""
+        }
+      ]
+    },
+    {
+      "engine": "startpage",
+      "searchUrl": "https://www.startpage.com/sp/search?q=dotnet%20test",
+      "topResults": []
+    }
   ]
 }

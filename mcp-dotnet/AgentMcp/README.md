@@ -9,9 +9,10 @@ Notes:
 - For production reliability use official search APIs (SerpAPI, Bing Search API, Google Custom Search) and configure API keys.
 - To run locally: dotnet run (requires .NET 10 SDK)
 
-## Test screenshots (simulated)
 
-The runtime was not available in the environment, so these screenshots show simulated expected responses used for documentation.
+## Test screenshots (attested live)
+
+The server was started locally and the screenshots below were captured from live requests to the running service at http://localhost:5005. These show the actual JSON responses returned by the endpoints.
 
 ![keepalive](test-screenshots/keepalive.png)
 
