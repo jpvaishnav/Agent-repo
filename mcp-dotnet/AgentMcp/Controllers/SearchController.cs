@@ -1,4 +1,7 @@
+using System;
+using System.Linq;
 using System.Net.Http.Headers;
+using System.Collections.Generic;
 using HtmlAgilityPack;
 using Microsoft.AspNetCore.Mvc;
 
@@ -53,8 +56,6 @@ namespace AgentMcp.Controllers
             doc.LoadHtml(html);
 
             var list = new List<object>();
-
-            // Find anchors with http(s) links and meaningful text as a fallback for many engines.
             var anchors = doc.DocumentNode.SelectNodes("//a[@href]") ?? Enumerable.Empty<HtmlNode>();
 
             foreach (var a in anchors)
@@ -66,7 +67,6 @@ namespace AgentMcp.Controllers
                 // normalize possible relative URLs or engine trackers
                 if (!href.StartsWith("http://") && !href.StartsWith("https://"))
                 {
-                    // Some search engines embed links like "/url?q=..." (Google) or redirect wrappers.
                     var qIdx = href.IndexOf("q=");
                     if (qIdx >= 0)
                     {
@@ -83,14 +83,63 @@ namespace AgentMcp.Controllers
                 var text = HtmlEntity.DeEntitize(a.InnerText ?? string.Empty).Trim();
                 if (text.Length < 3) continue;
 
-                // snippet: try to find a sibling paragraph or title-like text
-                var snippet = string.Empty;
+                // Improved snippet extraction: look for nearby text nodes, sibling nodes, parent/grandparent paragraphs, or meta description.
+                string snippet = string.Empty;
                 var parent = a.ParentNode;
+
+                // 1) Look for nearby p/span/div elements within the parent that have meaningful text.
                 if (parent != null)
                 {
-                    var p = parent.SelectSingleNode(".//p");
-                    if (p != null) snippet = HtmlEntity.DeEntitize(p.InnerText).Trim();
+                    var candidates = parent.SelectNodes(".//p|.//span|.//div") ?? Enumerable.Empty<HtmlNode>();
+                    foreach (var c in candidates)
+                    {
+                        var s = HtmlEntity.DeEntitize(c.InnerText ?? string.Empty).Trim();
+                        if (s.Length >= 30 && !s.Equals(text, StringComparison.OrdinalIgnoreCase))
+                        {
+                            snippet = s;
+                            break;
+                        }
+                    }
+
+                    // 2) If not found, check following siblings for short snippets.
+                    if (string.IsNullOrEmpty(snippet))
+                    {
+                        var sib = a.NextSibling;
+                        int steps = 0;
+                        while (sib != null && steps < 6)
+                        {
+                            var stext = HtmlEntity.DeEntitize(sib.InnerText ?? string.Empty).Trim();
+                            if (!string.IsNullOrEmpty(stext) && stext.Length >= 20 && !stext.Equals(text, StringComparison.OrdinalIgnoreCase))
+                            {
+                                snippet = stext;
+                                break;
+                            }
+                            sib = sib.NextSibling;
+                            steps++;
+                        }
+                    }
+
+                    // 3) If still empty, look at grandparent's first paragraph.
+                    if (string.IsNullOrEmpty(snippet))
+                    {
+                        var gp = parent.ParentNode;
+                        if (gp != null)
+                        {
+                            var gpP = gp.SelectSingleNode(".//p|.//div[contains(@class,'snippet')]|.//span[contains(@class,'snippet')]");
+                            if (gpP != null) snippet = HtmlEntity.DeEntitize(gpP.InnerText ?? string.Empty).Trim();
+                        }
+                    }
                 }
+
+                // 4) Fallback: meta description or og:description
+                if (string.IsNullOrEmpty(snippet))
+                {
+                    var meta = doc.DocumentNode.SelectSingleNode("//meta[@name='description']") ?? doc.DocumentNode.SelectSingleNode("//meta[@property='og:description']");
+                    if (meta != null) snippet = HtmlEntity.DeEntitize(meta.GetAttributeValue("content", "")).Trim();
+                }
+
+                // Trim snippet length for concise output
+                if (!string.IsNullOrEmpty(snippet) && snippet.Length > 300) snippet = snippet.Substring(0, 300) + "...";
 
                 list.Add(new { title = text, link = href, snippet });
             }
