@@ -1,0 +1,7 @@
+{
+  "query": "dotnet test",
+  "results": [
+    { "engine": "google", "searchUrl": "https://www.google.com/search?q=dotnet+test", "topResults": [ { "title":".NET testing overview","link":"https://learn.microsoft.com/dotnet/core/testing/","snippet":"Learn about testing in .NET" } ] },
+    { "engine": "bing", "searchUrl": "https://www.bing.com/search?q=dotnet+test", "topResults": [ { "title":"Introduction to testing in .NET","link":"https://learn.microsoft.com/dotnet/core/testing/","snippet":"Unit testing and more" } ] }
+  ]
+}
