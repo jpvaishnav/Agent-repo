@@ -38,7 +38,7 @@ namespace AgentMcp.Controllers
                 try
                 {
                     var html = await _http.GetStringAsync(engine.url);
-                    var items = ExtractTopResults(html, 3);
+                    var items = await ExtractTopResultsAsync(html, 3);
                     results.Add(new { engine = engine.name, searchUrl = engine.url, topResults = items });
                 }
                 catch (Exception ex)
@@ -50,7 +50,7 @@ namespace AgentMcp.Controllers
             return Ok(new { query, results });
         }
 
-        private List<object> ExtractTopResults(string html, int max)
+        private async Task<List<object>> ExtractTopResultsAsync(string html, int max)
         {
             var doc = new HtmlDocument();
             doc.LoadHtml(html);
@@ -83,11 +83,10 @@ namespace AgentMcp.Controllers
                 var text = HtmlEntity.DeEntitize(a.InnerText ?? string.Empty).Trim();
                 if (text.Length < 3) continue;
 
-                // Improved snippet extraction: look for nearby text nodes, sibling nodes, parent/grandparent paragraphs, or meta description.
                 string snippet = string.Empty;
                 var parent = a.ParentNode;
 
-                // 1) Look for nearby p/span/div elements within the parent that have meaningful text.
+                // Try to extract snippet from nearby nodes (same as before)
                 if (parent != null)
                 {
                     var candidates = parent.SelectNodes(".//p|.//span|.//div") ?? Enumerable.Empty<HtmlNode>();
@@ -101,7 +100,6 @@ namespace AgentMcp.Controllers
                         }
                     }
 
-                    // 2) If not found, check following siblings for short snippets.
                     if (string.IsNullOrEmpty(snippet))
                     {
                         var sib = a.NextSibling;
@@ -119,7 +117,6 @@ namespace AgentMcp.Controllers
                         }
                     }
 
-                    // 3) If still empty, look at grandparent's first paragraph.
                     if (string.IsNullOrEmpty(snippet))
                     {
                         var gp = parent.ParentNode;
@@ -131,15 +128,33 @@ namespace AgentMcp.Controllers
                     }
                 }
 
-                // 4) Fallback: meta description or og:description
+                // Fallback meta description
                 if (string.IsNullOrEmpty(snippet))
                 {
                     var meta = doc.DocumentNode.SelectSingleNode("//meta[@name='description']") ?? doc.DocumentNode.SelectSingleNode("//meta[@property='og:description']");
                     if (meta != null) snippet = HtmlEntity.DeEntitize(meta.GetAttributeValue("content", "")).Trim();
                 }
 
-                // Trim snippet length for concise output
-                if (!string.IsNullOrEmpty(snippet) && snippet.Length > 300) snippet = snippet.Substring(0, 300) + "...";
+                // If still empty, fetch the target page and attach its HTML body text as the snippet (trimmed)
+                if (string.IsNullOrEmpty(snippet))
+                {
+                    try
+                    {
+                        var pageHtml = await _http.GetStringAsync(href);
+                        var pageDoc = new HtmlDocument();
+                        pageDoc.LoadHtml(pageHtml);
+                        var body = pageDoc.DocumentNode.SelectSingleNode("//body");
+                        var bodyText = body != null ? HtmlEntity.DeEntitize(body.InnerText ?? string.Empty).Trim() : HtmlEntity.DeEntitize(pageDoc.DocumentNode.InnerText ?? string.Empty).Trim();
+                        if (!string.IsNullOrEmpty(bodyText))
+                        {
+                            snippet = bodyText.Length > 2000 ? bodyText.Substring(0, 2000) + "..." : bodyText;
+                        }
+                    }
+                    catch
+                    {
+                        // leave snippet empty if fetch fails
+                    }
+                }
 
                 list.Add(new { title = text, link = href, snippet });
             }
