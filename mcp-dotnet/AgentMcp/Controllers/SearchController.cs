@@ -11,9 +11,12 @@ namespace AgentMcp.Controllers
     public class SearchController : ControllerBase
     {
         private readonly HttpClient _http = new HttpClient();
+        private readonly AgentMcp.Services.McpFormatter _mcp;
+
+        public SearchController(AgentMcp.Services.McpFormatter mcp) { _mcp = mcp; }
 
         [HttpGet("/keepalive")]
-        public IActionResult KeepAlive() => Ok(new { status = "ok" });
+        public IActionResult KeepAlive() => Ok(_mcp.Format("keepalive", new { status = "ok" }));
 
         [HttpGet("/web_search")]
         public async Task<IActionResult> WebSearch([FromQuery] string query)
@@ -47,7 +50,8 @@ namespace AgentMcp.Controllers
                 }
             }
 
-            return Ok(new { query, results });
+            var envelope = _mcp.Format("web_search", new { query, results });
+            return Ok(envelope);
         }
 
         private async Task<List<object>> ExtractTopResultsAsync(string html, int max)

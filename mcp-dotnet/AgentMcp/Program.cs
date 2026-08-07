@@ -4,6 +4,7 @@ using Microsoft.Extensions.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
+builder.Services.AddSingleton<AgentMcp.Services.McpFormatter>();
 
 var app = builder.Build();
 app.MapControllers();
