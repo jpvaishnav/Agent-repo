@@ -7,7 +7,7 @@ Endpoints:
 Notes:
 - This project uses HtmlAgilityPack to extract top results when official APIs are not configured.
 - For production reliability use official search APIs (SerpAPI, Bing Search API, Google Custom Search) and configure API keys.
-- To run locally: dotnet run (requires .NET 7 SDK)
+- To run locally: dotnet run (requires .NET 10 SDK)
 
 ## Test screenshots (simulated)
 

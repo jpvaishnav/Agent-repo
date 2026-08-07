@@ -29,7 +29,7 @@ A sample minimal .NET MCP server has been added at `mcp-dotnet/AgentMcp`. It exp
 How to run (local):
 
 1. cd mcp-dotnet\AgentMcp
-2. dotnet run
+2. dotnet run (requires .NET 10 SDK)
 
 To configure as a remote MCP tool, expose the service (ngrok or hosted URL) and register the base URL in the agents' configuration so the agent can call /keepalive and /web_search. The project is a starting point and should be hardened for production use (rate limits, API keys, robust HTML parsing, retries, and caching).
 
