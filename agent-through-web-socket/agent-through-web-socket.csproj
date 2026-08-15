@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- Azure Relay package is referenced as an example; install when building/testing: Microsoft.Azure.Relay -->
+    <PackageReference Include="Microsoft.Azure.Relay" Version="2.0.0" />
+  </ItemGroup>
+</Project>
