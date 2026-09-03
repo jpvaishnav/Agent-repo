@@ -6,6 +6,12 @@
       "name": "Code Change Diagram",
       "path": "skills/generate-pr-diagram",
       "description": "Generate a visual system diagram for code changes"
+    },
+    {
+      "id": "create-pr-with-guidelines",
+      "name": "Create PR With Guidelines",
+      "path": "skills/create-pr-with-guidelines",
+      "description": "Create a descriptive pull request with the checked-in input prompt"
     }
   ]
 }
