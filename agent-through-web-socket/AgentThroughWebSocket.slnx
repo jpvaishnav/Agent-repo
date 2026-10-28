@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/AgentThroughWebSocket.Shared/AgentThroughWebSocket.Shared.csproj" />
+    <Project Path="src/AgentX/AgentX.csproj" />
+    <Project Path="src/RelayListener/RelayListener.csproj" />
+    <Project Path="src/ServiceS/ServiceS.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/AgentThroughWebSocket.Tests/AgentThroughWebSocket.Tests.csproj" />
+  </Folder>
+</Solution>
